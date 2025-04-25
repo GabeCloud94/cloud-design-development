@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {
   type CartViewPayload,
+  Image,
   useAnalytics,
   useOptimisticCart,
 } from '@shopify/hydrogen';
@@ -25,9 +26,9 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
+    <header className="header px-4 py-8 bg-neutral-50 border-b-2 border-neutral-100 shadow-md">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+        <strong className='poppins-bold'>{shop.name}</strong>
       </NavLink>
       <HeaderMenu
         menu={menu}
@@ -63,6 +64,7 @@ export function HeaderMenu({
           prefetch="intent"
           style={activeLinkStyle}
           to="/"
+          className='poppins-bold'
         >
           Home
         </NavLink>
@@ -79,7 +81,7 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
+            className="header-menu-item poppins-bold" 
             end
             key={item.id}
             onClick={close}
@@ -102,10 +104,16 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+      <NavLink prefetch="intent" to="/account" style={activeLinkStyle} className={'poppins-bold'}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
+          <Image
+  src="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/icons8-businessman-48.png?v=1745558283"
+  alt="Account icon"
+  width={36}
+  height={36}
+  loading="eager" // Optional: "lazy" (default) or "eager"
+/>
           </Await>
         </Suspense>
       </NavLink>
@@ -122,7 +130,7 @@ function HeaderMenuMobileToggle() {
       className="header-menu-mobile-toggle reset"
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      <h3 className='font-semibold text-2xl'>☰</h3>
     </button>
   );
 }
@@ -130,8 +138,14 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
+    <button className="reset poppins-bold hover:cursor-pointer" onClick={() => open('search')}>
+      <Image
+  src="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/icons8-search-48.png?v=1745558175"
+  alt="Search icon"
+  width={36}
+  height={36}
+  loading="eager" // Optional: "lazy" (default) or "eager"
+/>
     </button>
   );
 }
@@ -143,6 +157,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
+      className='poppins-bold relative pr-4'
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -154,7 +169,13 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <Image
+  src="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/icons8-paper-bag-48.png?v=1745557179"
+  alt="Shopping bag icon"
+  width={36}
+  height={36}
+  loading="eager" // Optional: "lazy" (default) or "eager"
+/> {count === null ? <span className='absolute top-0 right-0 size-3.5'>&nbsp;</span> : <span className='absolute top-0 right-0 size-3.5'>{count}</span>}
     </a>
   );
 }

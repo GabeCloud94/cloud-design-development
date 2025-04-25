@@ -2,6 +2,8 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
+import { HeroImage } from '~/components/HeroImage';
+import { AboutMe } from '~/components/AboutMe';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
@@ -58,7 +60,17 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="home">
+    <div className="home bg-neutral-50">
+      <HeroImage
+      mobileLogoUrl='https://cdn.shopify.com/s/files/1/0634/1830/2531/files/cloud-design-development-black.png?v=1745567641'
+  imageUrl="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/PXL_20250302_222020330_exported_1745558950982.jpg?v=1745559197"
+  altText="Hero banner"
+  logoUrl="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/cloud-design-development-white-sm.png?v=1745560584"
+  heading="Cloud's Design & Development"
+  description="Design with purpose. Build for scale."
+  className="mb-8"
+/>
+      <AboutMe />
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>

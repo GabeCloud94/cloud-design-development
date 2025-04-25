@@ -8,8 +8,11 @@ import {
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import type { LinksFunction } from "@shopify/remix-oxygen";
 
 export type RootLoader = typeof loader;
+
+
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -52,6 +55,11 @@ export function links() {
     {
       rel: 'preconnect',
       href: 'https://shop.app',
+    },
+    {
+      rel: 'preload',
+      href: 'https://cdn.shopify.com/s/files/1/0634/1830/2531/files/PXL_20250302_222020330_exported_1745558950982.jpg?v=1745559197',
+      as: 'image',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
