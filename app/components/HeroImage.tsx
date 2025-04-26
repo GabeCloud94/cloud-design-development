@@ -1,6 +1,5 @@
-// app/components/HeroImage.tsx
 import {Image} from '@shopify/hydrogen';
-
+import { NavLink } from '@remix-run/react';
 interface HeroImageProps {
   imageUrl: string;
   mobileLogoUrl: string;
@@ -46,10 +45,10 @@ export function HeroImage({
                   height={290}
                   className="object-contain h-[100px] w-full mb-4 hidden md:block"
                 />
-                </div>
-                )}
-                {mobileLogoUrl && (
-                  <div className='flex items-center justify-center mb-0'>
+              </div>
+            )}
+            {mobileLogoUrl && (
+              <div className='flex items-center justify-center mb-0'>
                 <Image
                   src={mobileLogoUrl}
                   alt="Company logo"
@@ -57,19 +56,26 @@ export function HeroImage({
                   height={290}
                   className="object-contain h-[100px] w-full mb-4 md:hidden"
                 />
-                </div>
-                )}
+              </div>
+            )}
             
-            <h1 className="md:text-4xl text-lg text-center poppins-bold text-neutral-900 mb-2">
+            {/* Gradient Heading */}
+            <h1 className="md:text-4xl text-lg text-center poppins-bold mb-2 bg-gradient-to-r from-sky-600 to-sky-800 bg-clip-text text-transparent">
               {heading}
             </h1>
-            <p className="md:text-lg text-sm text-neutral-800 text-center poppins-semibold">
+            
+            <p className="md:text-lg text-sm text-sky-800 text-center poppins-semibold">
               {description}
             </p>
+            
             <div className="flex justify-center mt-6">
-            <button className="bg-neutral-800 hover:bg-neutral-900 text-white px-6 py-3 rounded-lg md:font-medium font-sm transition-colors">
-              Contact Me
-            </button>
+              {/* Gradient Button */}
+              <NavLink
+                to="/pages/contact"
+                className="bg-gradient-to-r from-sky-600 to-sky-800 hover:from-sky-700 hover:to-sky-900 text-white px-6 py-3 rounded-lg md:font-medium font-sm transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Contact Me
+              </NavLink>
             </div>
           </div>
         </div>

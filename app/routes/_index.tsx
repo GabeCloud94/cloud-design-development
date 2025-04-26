@@ -34,7 +34,7 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
   ]);
 
   return {
-    featuredCollection: collections.nodes[0],
+    collections,
   };
 }
 
@@ -60,7 +60,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="home bg-neutral-50">
+    <div className="home bg-sky-100">
       <HeroImage
         mobileLogoUrl='https://cdn.shopify.com/s/files/1/0634/1830/2531/files/cloud-design-development-black.png?v=1745567641'
         imageUrl="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/PXL_20250302_222020330_exported_1745558950982.jpg?v=1745559197"
@@ -71,31 +71,42 @@ export default function Homepage() {
         className="mb-8"
       />
       <AboutMe />
-      <FeaturedCollection collection={data.featuredCollection} />
+      <FeaturedCollections collections={data.collections} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
 
-function FeaturedCollection({
-  collection,
+function FeaturedCollections({
+  collections,
 }: {
-  collection: FeaturedCollectionFragment;
+  collections: {
+    nodes: FeaturedCollectionFragment[];
+  };
 }) {
-  if (!collection) return null;
-  const image = collection?.image;
+  if (!collections?.nodes?.length) return null;
+
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+    <div className="featured-collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 py-8 w-full max-w-[1300px] mx-auto">
+      {collections.nodes.map((collection) => (
+        <div key={collection.id} className="featured-collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <Link to={`/collections/${collection.handle}`}>
+            {collection.image && (
+              <div className="collection-image-container aspect-square overflow-hidden">
+                <Image
+                  data={collection.image}
+                  className="collection-image w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+              </div>
+            )}
+            <h2 className="collection-title p-4 text-center text-sky-900 font-bold">
+              {collection.title}
+            </h2>
+          </Link>
         </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
+      ))}
+    </div>
   );
 }
 
@@ -105,40 +116,52 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
+    <div className="recommended-products px-4 py-8 w-full max-w-[1300px] mx-auto">
+      <h2 className="poppins-semibold text-3xl mb-8 text-sky-900">Recommended Products</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
+          {(response) => {
+            if (!response?.products?.nodes.length) {
+              return <div>No recommended products found</div>;
+            }
+
+            return (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                {response.products.nodes.map((product) => {
+                  if (!product.images.nodes[0]) return null;
+                  
+                  return (
                     <Link
                       key={product.id}
-                      className="recommended-product"
+                      className="group border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                       to={`/products/${product.handle}`}
                     >
-                      <Image
-                        data={product.images.nodes[0]}
-                        aspectRatio="1/1"
-                        sizes="(min-width: 45em) 20vw, 50vw"
-                      />
-                      <h4>{product.title}</h4>
-                      <small>
-                        <Money data={product.priceRange.minVariantPrice} />
-                      </small>
+                      <div className="aspect-square bg-gray-50">
+                        <Image
+                          data={product.images.nodes[0]}
+                          className="w-full h-full object-cover bg-sky-100"
+                          sizes="(min-width: 768px) 25vw, 50vw"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h4 className="font-medium group-hover:text-sky-600">
+                          {product.title}
+                        </h4>
+                        <p className="text-sm text-sky-900">
+                          <Money data={product.priceRange.minVariantPrice} />
+                        </p>
+                      </div>
                     </Link>
-                  ))
-                : null}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            );
+          }}
         </Await>
       </Suspense>
-      <br />
     </div>
   );
 }
-
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {
     id
@@ -154,7 +177,7 @@ const FEATURED_COLLECTION_QUERY = `#graphql
   }
   query FeaturedCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
+    collections(first: 4, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...FeaturedCollection
       }
