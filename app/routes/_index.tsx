@@ -133,7 +133,7 @@ function RecommendedProducts({
                   return (
                     <Link
                       key={product.id}
-                      className="group border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                      className="group border-sky-900 border-2 shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow"
                       to={`/products/${product.handle}`}
                     >
                       <div className="aspect-square bg-gray-50">
@@ -144,7 +144,7 @@ function RecommendedProducts({
                         />
                       </div>
                       <div className="p-4">
-                        <h4 className="font-medium group-hover:text-sky-600">
+                        <h4 className="font-medium group-hover:text-sky-600 text-sky-900">
                           {product.title}
                         </h4>
                         <p className="text-sm text-sky-900">
