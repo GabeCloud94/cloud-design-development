@@ -144,10 +144,10 @@ function RecommendedProducts({
                         />
                       </div>
                       <div className="p-4">
-                        <h4 className="font-medium group-hover:text-sky-600 text-sky-900">
+                        <h4 className="font-medium group-hover:text-sky-600 text-neutral-900">
                           {product.title}
                         </h4>
-                        <p className="text-sm text-sky-900">
+                        <p className="text-sm text-neutral-900">
                           <Money data={product.priceRange.minVariantPrice} />
                         </p>
                       </div>

@@ -64,7 +64,7 @@ export function HeroImage({
               {heading}
             </h1>
             
-            <p className="md:text-lg text-sm text-sky-800 text-center poppins-semibold">
+            <p className="md:text-lg text-sm text-neutral-800 text-center poppins-semibold">
               {description}
             </p>
             

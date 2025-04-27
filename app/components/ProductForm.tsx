@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import {Link, useNavigate} from '@remix-run/react';
 import {type MappedProductOptions} from '@shopify/hydrogen';
 import type {
@@ -7,6 +8,7 @@ import type {
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
+import { QuantitySelector } from './QuantitySelector';
 
 export function ProductForm({
   productOptions,
@@ -15,6 +17,10 @@ export function ProductForm({
   productOptions: MappedProductOptions[];
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
 }) {
+  const [quantity, setQuantity] = useState(1); // Add state for quantity
+  useEffect(() => {
+    setQuantity(1); // Reset to 1 when selectedVariant changes
+  }, [selectedVariant]);
   const navigate = useNavigate();
   const {open} = useAside();
   return (
@@ -101,6 +107,9 @@ export function ProductForm({
           </div>
         );
       })}
+      <div className="mb-4">
+        <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+      </div>
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
@@ -111,7 +120,7 @@ export function ProductForm({
             ? [
                 {
                   merchandiseId: selectedVariant.id,
-                  quantity: 1,
+                  quantity: quantity,
                   selectedVariant,
                 },
               ]

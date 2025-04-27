@@ -36,7 +36,7 @@ export function Header({
         </div>
       <header className="header px-4 py-8 bg-sky-50 border-b-2 border-sky-100 shadow-md">
         <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-          <strong className='poppins-bold'>{shop.name}</strong>
+          <strong className='poppins-semibold text-neutral-900'>{shop.name}</strong>
         </NavLink>
         <HeaderMenu
           menu={menu}
@@ -73,7 +73,7 @@ export function HeaderMenu({
           prefetch="intent"
           style={activeLinkStyle}
           to="/"
-          className='poppins-bold'
+          className='poppins-semibold text-neutral-900'
         >
           Home
         </NavLink>
@@ -90,7 +90,7 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item poppins-bold" 
+            className="header-menu-item poppins-semibold text-neutral-900" 
             end
             key={item.id}
             onClick={close}
@@ -140,9 +140,9 @@ function HeaderMenuMobileToggle() {
       className="header-menu-mobile-toggle reset"
       onClick={() => open('mobile')}
     >
-      <h3 className='font-semibold text-2xl'>
+      <h3 className='poppins-semibold text-neutral-900 text-2xl'>
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="36" height="36" viewBox="0 0 48 48">
-<path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M36.1,7.5h2.4c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2H18"></path><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M13,14.5H9.5c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h21.3"></path><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M13.3,27.5H9.5c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h20"></path><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M35,20.5h3.5c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2h-20"></path><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M13.5,40.5h-4c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h19.6"></path><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" strokeWidth="3" d="M34.2,33.5h4.3c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2h-20"></path>
+<path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M36.1,7.5h2.4c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2H18"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M13,14.5H9.5c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h21.3"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M13.3,27.5H9.5c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h20"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M35,20.5h3.5c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2h-20"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M13.5,40.5h-4c-1.1,0-2-0.9-2-2v-3c0-1.1,0.9-2,2-2h19.6"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" d="M34.2,33.5h4.3c1.1,0,2,0.9,2,2v3c0,1.1-0.9,2-2,2h-20"></path>
 </svg>
       </h3>
     </button>
@@ -152,7 +152,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset poppins-bold hover:cursor-pointer" onClick={() => open('search')}>
+    <button className="reset poppins-semibold text-neutral-900 hover:cursor-pointer" onClick={() => open('search')}>
       <Image
   src="https://cdn.shopify.com/s/files/1/0634/1830/2531/files/icons8-search-48.png?v=1745558175"
   alt="Search icon"
@@ -171,7 +171,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
-      className='poppins-bold relative pr-4'
+      className='poppins-semibold text-neutral-900 relative pr-4'
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -189,7 +189,7 @@ function CartBadge({count}: {count: number | null}) {
   width={36}
   height={36}
   loading="eager" // Optional: "lazy" (default) or "eager"
-/> {count === null ? <span className='absolute top-0 right-0 size-3.5'>&nbsp;</span> : <span className='absolute top-0 right-0 size-3.5'>{count}</span>}
+/> {count === null ? <span className='absolute top-0 right-0 size-3.5 poppins-semibold text-neutral-900'>&nbsp;</span> : <span className='absolute top-0 right-0 size-3.5 poppins-semibold text-neutral-900'>{count}</span>}
     </a>
   );
 }

@@ -18,14 +18,14 @@ export function AboutMe() {
           <h3 className="text-3xl text-center md:text-left poppins-semibold text-sky-700">
             From Passion to Profession
           </h3>
-          <p className="text-lg text-sky-600 inter-thin">
+          <p className="text-lg text-neutral-600 inter-thin">
             <SparkleSVG className="inline mr-2" />
             Since 2022, I've had the privilege of transforming visions into 
             high-performing digital experiences for discerning clients. What 
             began as curiosity about how websites work has evolved into 
             crafting solutions that drive real business results.
           </p>
-          <p className="text-lg text-sky-600 inter-thin">
+          <p className="text-lg text-neutral-600 inter-thin">
             <RocketSVG className="inline mr-2" />
             My work has supported 7-figure ecommerce stores, streamlined 
             enterprise workflows, and elevated brands that demand both 
@@ -90,8 +90,8 @@ function ServiceCard({
       <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mb-4">
         {icon}
       </div>
-      <h4 className="text-xl font-semibold text-sky-700 mb-2">{title}</h4>
-      <p className="text-sky-600">{description}</p>
+      <h4 className="text-xl poppins-semibold text-sky-700 mb-2">{title}</h4>
+      <p className="text-neutral-600 inter-thin">{description}</p>
     </div>
   );
 }
