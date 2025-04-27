@@ -6,6 +6,7 @@ import type { ProductFragment } from 'storefrontapi.generated';
 import { useLoaderData } from '@remix-run/react';
 import type { LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import { getSelectedProductOptions } from '@shopify/hydrogen';
+import FeaturedCollections from '~/components/FeaturedCollections';
 
 
 export const meta: MetaFunction = () => {
@@ -19,25 +20,41 @@ type RecommendedProductsQueryResult = {
 };
 
 // --- Loader ---
-export async function loader({ context, request }: LoaderFunctionArgs) {
+export async function loader({ context, request, params }: LoaderFunctionArgs) {
+  const criticalData = await loadCriticalData({ context, request, params }); // Pass all required properties
   try {
     const recommendedProducts = await context.storefront.query<RecommendedProductsQueryResult>(
-      BEST_SELLERS_QUERY, {
-        variables: {selectedOptions: getSelectedProductOptions(request)},
+      BEST_SELLERS_QUERY,
+      {
+        variables: { selectedOptions: getSelectedProductOptions(request) },
       }
     );
 
-    // Check if something weird happened
+    // Check if something went wrong
     if (!recommendedProducts || !recommendedProducts.products) {
-      return { recommendedProducts: { products: { nodes: [] } } };
+      return { recommendedProducts: { products: { nodes: [] } }, ...criticalData };
     }
 
-    return { recommendedProducts };
+    return { recommendedProducts, ...criticalData }; // Combine data
   } catch (error) {
     console.error(error);
-    return { recommendedProducts: { products: { nodes: [] } } };
+    return { recommendedProducts: { products: { nodes: [] } }, ...criticalData };
   }
 }
+
+
+async function loadCriticalData({ context, request, params }: LoaderFunctionArgs) {
+  const [{ collections }] = await Promise.all([
+    context.storefront.query(FEATURED_COLLECTION_QUERY),
+    // Add other queries to load in parallel if needed
+  ]);
+
+  return {
+    collections, // Return the collections data
+  };
+}
+
+
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
@@ -58,6 +75,7 @@ export default function Homepage() {
         className="mb-8"
       />
       <AboutMe />
+      <FeaturedCollections collections={data.collections} />
       <RecommendedProducts 
         products={products} 
         title="Best Sellers" 
@@ -67,6 +85,29 @@ export default function Homepage() {
   );
 }
 
+
+const FEATURED_COLLECTION_QUERY = `#graphql
+  fragment FeaturedCollection on Collection {
+    id
+    title
+    image {
+      id
+      url
+      altText
+      width
+      height
+    }
+    handle
+  }
+  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    collections(first: 4, sortKey: UPDATED_AT, reverse: true) {
+      nodes {
+        ...FeaturedCollection
+      }
+    }
+  }
+` as const;
 
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
