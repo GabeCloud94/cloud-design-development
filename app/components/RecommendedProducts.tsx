@@ -32,8 +32,8 @@ export function RecommendedProducts({
   }
 
   return (
-    <div className={`recommended-products ${className}`}>
-      <h2 className="recommended-products-title">{title}</h2>
+    <div className={`recommended-products ${className} max-w-[1300px] mx-auto px-4`}>
+      <h2 className="recommended-products-title text-3xl text-sky-800 mb-8 text-center poppins-semibold">{title}</h2>
       <div className="recommended-products-grid">
         {products.map((product) => (
           <ProductCard 

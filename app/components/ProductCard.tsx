@@ -3,6 +3,7 @@ import { ProductImage } from '~/components/ProductImage';
 import { ProductForm } from '~/components/ProductForm';
 import { ProductFragment } from 'storefrontapi.generated';
 import { Analytics, getProductOptions } from '@shopify/hydrogen';
+import { Link } from '@remix-run/react';
 
 interface ProductCardProps {
   product: ProductFragment;
@@ -17,14 +18,16 @@ export function ProductCard({
     const selectedVariant = product.selectedOrFirstAvailableVariant || null;
 
   return (
-    <div className={`product-card ${className}`}>
+    <div className={`product-card ${className} border-2 border-neutral-300 rounded-lg p-4`}>
       {/* Display the image for the selected variant */}
+      <Link to={`/products/${product.handle}`}>
       <ProductImage image={selectedVariant?.image} />
-      
+      </Link>
       <div className="product-card-content">
         {/* Product title */}
-        <h2 className="product-title">{product.title}</h2>
-        
+        <Link to={`/products/${product.handle}`}>
+        <h2 className="product-title ">{product.title}</h2>
+        </Link>
         {/* Display the price and compareAtPrice */}
         <ProductPrice
           price={selectedVariant?.price}

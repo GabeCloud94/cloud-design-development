@@ -7,7 +7,7 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import type {ProductFragment} from 'storefrontapi.generated';
+import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
 import { QuantitySelector } from './QuantitySelector';
 
 export function ProductForm({
@@ -23,6 +23,7 @@ export function ProductForm({
   }, [selectedVariant]);
   const navigate = useNavigate();
   const {open} = useAside();
+  console.log(productOptions);
   return (
     <div className="product-form">
       {productOptions.map((option) => {
@@ -43,6 +44,7 @@ export function ProductForm({
                   exists,
                   isDifferentProduct,
                   swatch,
+                  variant,
                 } = value;
 
                 if (isDifferentProduct) {
@@ -52,7 +54,7 @@ export function ProductForm({
                   // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className={`product-options-item ${option.name === 'Color' ? 'product-options-item-color' : ''}`}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
@@ -65,7 +67,12 @@ export function ProductForm({
                         opacity: available ? 1 : 0.3,
                       }}
                     >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
+                      <ProductOptionSwatch
+                        swatch={swatch}
+                        name={name}
+                        image={option.name === 'Color' ? (variant?.image as unknown as ProductVariantFragment['image']) : undefined}
+                        option={option.name}
+                      />
                     </Link>
                   );
                 } else {
@@ -79,7 +86,7 @@ export function ProductForm({
                       type="button"
                       className={`product-options-item${
                         exists && !selected ? ' link' : ''
-                      }`}
+                      } ${option.name === 'Color' ? 'product-options-item-color' : ''}`}
                       key={option.name + name}
                       style={{
                         border: selected
@@ -97,7 +104,12 @@ export function ProductForm({
                         }
                       }}
                     >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
+                      <ProductOptionSwatch
+                        swatch={swatch}
+                        name={name}
+                        image={option.name === 'Color' ? (variant?.image as unknown as ProductVariantFragment['image']) : undefined}
+                        option={option.name}
+                      />
                     </button>
                   );
                 }
@@ -136,24 +148,41 @@ export function ProductForm({
 function ProductOptionSwatch({
   swatch,
   name,
+  image,
+  option,
 }: {
   swatch?: Maybe<ProductOptionValueSwatch> | undefined;
   name: string;
+  image?: Maybe<ProductVariantFragment['image']> | undefined;
+  option: string;
 }) {
-  const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
+  const imageUrl = (image && 'url' in image) ? image.url : undefined;
 
-  if (!image && !color) return name;
+  if (!imageUrl && !color) {
+    return <div>{name}</div>;
+  }
 
   return (
     <div
       aria-label={name}
-      className="product-option-label-swatch"
+      className={`product-option-label-swatch ${option === 'Color' ? 'product-options-item-color' : ''}`}
       style={{
         backgroundColor: color || 'transparent',
       }}
     >
-      {!!image && <img src={image} alt={name} />}
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={name}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            borderRadius: '50%',
+          }}
+        />
+      )}
     </div>
   );
 }

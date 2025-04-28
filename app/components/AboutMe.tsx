@@ -13,7 +13,7 @@ export function AboutMe() {
       </div>
 
       {/* Bio Section */}
-      <div className="grid md:grid-cols-2 gap-12 items-center mb-10 md:mb-20">
+      <div className="grid md:grid-cols-2 gap-12 items-center mb-10 md:mb-20 px-4">
         <div className="space-y-6 px-6 md:px-0">
           <h3 className="text-3xl text-center md:text-left poppins-semibold text-sky-700">
             From Passion to Profession

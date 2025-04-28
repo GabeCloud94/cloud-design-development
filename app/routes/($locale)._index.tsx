@@ -187,6 +187,12 @@ const BEST_SELLERS_QUERY = `#graphql
           image {
             previewImage {
               url
+              altText
+              height
+              id
+              url
+              width
+              __typename
             }
           }
         }

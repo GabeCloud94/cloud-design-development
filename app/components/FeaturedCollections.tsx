@@ -26,7 +26,7 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
   if (!collections?.nodes?.length) return null;
 
   return (
-    <div className="featured-collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 py-8 w-full max-w-[1300px] mx-auto">
+    <div className="featured-collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 py-8 w-full max-w-[1300px] mx-auto mb-8">
       {collections.nodes.map((collection) => (
         <div key={collection.id} className="featured-collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
           <Link to={`/collections/${collection.handle}`}>
@@ -39,7 +39,7 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
                 />
               </div>
             )}
-            <h2 className="collection-title p-4 text-center text-sky-900 font-bold">
+            <h2 className="collection-title p-4 text-center text-sky-900 poppins-semibold">
               {collection.title && collection.title}
             </h2>
           </Link>

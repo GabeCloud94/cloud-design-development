@@ -124,6 +124,14 @@
 img {
   border-radius: 4px;
 }
+.product-options-item-color {
+  width: 3rem!important;
+  height: 3rem!important;
+  border-radius: 50%!important;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
 /*
 * --------------------------------------------------
