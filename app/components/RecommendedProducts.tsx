@@ -24,7 +24,7 @@ export function RecommendedProducts({
 
   if (!products.length) {
     return (
-      <div className="no-products">
+      <div className="no-products max-w-[1300px] mx-auto px-4">
         <h3>Currently no featured products available</h3>
         <p>Check back later for updates</p>
       </div>

@@ -21,7 +21,6 @@ interface FeaturedCollectionsProps {
 }
 
 export default function FeaturedCollections({ collections }: FeaturedCollectionsProps) {
-  console.log('Collections data:', collections); // Debugging the collections data
 
   if (!collections?.nodes?.length) return null;
 
