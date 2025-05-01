@@ -98,10 +98,10 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className="product">
+    <div className="product max-w-[1300px] mx-auto my-8 px-4">
       <ProductImage image={selectedVariant?.image} />
       <div className="product-main">
-        <h1>{title}</h1>
+        <h1 className=' md:text-4xl text-lg poppins-bold pb-4 bg-gradient-to-r from-sky-600 to-sky-800 bg-clip-text text-transparent leading-lg md:leading-4xl'>{title}</h1>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}

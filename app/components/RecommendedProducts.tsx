@@ -15,7 +15,6 @@ interface RecommendedProductsProps {
 // --- Component ---
 export function RecommendedProducts({
   title = 'Best Sellers',
-  className = '',
   products,
 }: RecommendedProductsProps) {
 
@@ -24,7 +23,7 @@ export function RecommendedProducts({
 
   if (!products.length) {
     return (
-      <div className="no-products max-w-[1300px] mx-auto px-4">
+      <div className="no-products max-w-[1300px] mx-auto px-4 pb-8">
         <h3>Currently no featured products available</h3>
         <p>Check back later for updates</p>
       </div>
@@ -32,7 +31,7 @@ export function RecommendedProducts({
   }
 
   return (
-    <div className={`recommended-products ${className} max-w-[1300px] mx-auto px-4`}>
+    <div className={`recommended-products max-w-[1300px] mx-auto px-4 pb-8`}>
       <h2 className="recommended-products-title text-3xl text-sky-800 mb-8 text-center poppins-semibold">{title}</h2>
       <div className="recommended-products-grid">
         {products.map((product) => (

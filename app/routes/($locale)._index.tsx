@@ -78,8 +78,7 @@ export default function Homepage() {
       <FeaturedCollections collections={data.collections} />
       <RecommendedProducts 
         products={products} 
-        title="Best Sellers" 
-        className="mb-8" 
+        title="Best Sellers"  
       />
     </div>
   );

@@ -9,9 +9,9 @@ export function ProductPrice({
   compareAtPrice?: MoneyV2 | null;
 }) {
   return (
-    <div className="product-price">
+    <div className="product-price inter-thin text-lg text-neutral-900">
       {compareAtPrice ? (
-        <div className="product-price-on-sale">
+        <div className="product-price-on-sale inter-thin">
           {price ? <Money data={price} /> : null}
           <s>
             <Money data={compareAtPrice} />

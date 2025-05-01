@@ -18,7 +18,7 @@ export function ProductCard({
     const selectedVariant = product.selectedOrFirstAvailableVariant || null;
 
   return (
-    <div className={`product-card ${className} border-2 border-neutral-300 rounded-lg p-4`}>
+    <div className={`product-card ${className} border-2 border-sky-800 rounded-lg pt-4 px-4 pb-2 bg-sky-50`}>
       {/* Display the image for the selected variant */}
       <Link to={`/products/${product.handle}`}>
       <ProductImage image={selectedVariant?.image} />
@@ -26,14 +26,13 @@ export function ProductCard({
       <div className="product-card-content">
         {/* Product title */}
         <Link to={`/products/${product.handle}`}>
-        <h2 className="product-title ">{product.title}</h2>
+        <h2 className="product-title text-lg poppins-medium text-neutral-900 leading-tight py-2">{product.title}</h2>
         </Link>
         {/* Display the price and compareAtPrice */}
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
         />
-        
         {/* Product form to handle variant options */}
         <ProductForm
           productOptions={productOptions} // Pass the available product options

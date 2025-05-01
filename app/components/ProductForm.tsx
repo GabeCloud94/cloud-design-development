@@ -31,7 +31,7 @@ export function ProductForm({
         if (option.optionValues.length === 1) return null;
 
         return (
-          <div className="product-options" key={option.name}>
+          <div className="product-options pb-2" key={option.name}>
             <h5>{option.name}</h5>
             <div className="product-options-grid">
               {option.optionValues.map((value) => {
@@ -115,13 +115,12 @@ export function ProductForm({
                 }
               })}
             </div>
-            <br />
           </div>
         );
       })}
-      <div className="mb-4">
+      <div className="mb-4 flex justify-evenly items-center">
         <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
-      </div>
+      
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
@@ -141,6 +140,7 @@ export function ProductForm({
       >
         {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
       </AddToCartButton>
+      </div>
     </div>
   );
 }
