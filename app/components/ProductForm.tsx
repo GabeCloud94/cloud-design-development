@@ -118,7 +118,7 @@ export function ProductForm({
           </div>
         );
       })}
-      <div className="mb-4 flex justify-evenly items-center">
+      <div className="mb-4 flex flex-col md:flex-row gap-4 md:gap-0 justify-evenly items-center">
         <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
       
       <AddToCartButton
@@ -138,7 +138,7 @@ export function ProductForm({
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {selectedVariant?.availableForSale ? 'Add to Cart' : 'Sold out'}
       </AddToCartButton>
       </div>
     </div>

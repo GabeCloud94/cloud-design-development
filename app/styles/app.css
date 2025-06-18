@@ -125,8 +125,9 @@ img {
   border-radius: 4px;
 }
 .product-options-item-color {
-  width: 3rem!important;
-  height: 3rem!important;
+  width: 2.5rem!important;
+  height: 2.5rem!important;
+  padding: .15rem!important;
   border-radius: 50%!important;
   justify-content: center;
   align-items: center;
@@ -571,10 +572,17 @@ button.reset:hover:not(:has(> *)) {
 
 .product-options-item,
 .product-options-item:disabled {
-  padding: 0.25rem 0.5rem;
+  
   background-color: transparent;
   font-size: 1rem;
   font-family: inherit;
+  width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    display: flex
+;
 }
 
 .product-option-label-swatch {
